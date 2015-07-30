@@ -1,7 +1,7 @@
 package com.blackbaud.bbam2;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,7 @@ import java.util.List;
 import apps.Apps;
 
 
-public class AccountLink extends ActionBarActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener{
+public class AccountLink extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener{
     public static final String ID_KEY = "id";
 
     Spinner productList;

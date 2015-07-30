@@ -24,6 +24,12 @@
             android:name=".MessageList"
             android:label="@string/title_activity_message_list" >
         </activity>
+        <activity
+            android:name=".MessageDetailActivity"
+            android:label="@string/title_activity_notification_detail" >
+        </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
