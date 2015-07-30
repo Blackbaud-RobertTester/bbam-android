@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">bbam2</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_account_link">AccountLink</string>
+    <string name="title_activity_message_list">MessageList</string>
+</resources>
