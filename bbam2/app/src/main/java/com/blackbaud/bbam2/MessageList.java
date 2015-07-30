@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import notification.NotificationAdapter;
 import notification.NotificationItem;
 
@@ -25,8 +32,11 @@ public class MessageList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
+        Intent intent = getIntent();
+        List<NotificationItem> notificationItems = getNotificaitons(intent.getStringExtra(MainActivity.EXTRA_MESSAGE));
+
         this.list = (ListView) findViewById(R.id.notifList);
-        final NotificationAdapter notificationAdapter = new NotificationAdapter(this);
+        final NotificationAdapter notificationAdapter = new NotificationAdapter(this, notificationItems);
         this.list.setAdapter(notificationAdapter);
 
         final MessageList messageList = this;
@@ -34,12 +44,32 @@ public class MessageList extends Activity {
         this.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NotificationItem notificationItem = (NotificationItem)notificationAdapter.getItem(position);
+                NotificationItem notificationItem = (NotificationItem) notificationAdapter.getItem(position);
                 Intent intent = new Intent(messageList, MessageDetailActivity.class);
                 intent.putExtra(MessageList.NOTIFICATION_ITEM, notificationItem.notificationId);
                 startActivity(intent);
             }
         });
+    }
+
+    private List<NotificationItem> getNotificaitons(String result) {
+        List<NotificationItem> notifications = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(result);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int id = jsonObject.getInt("Id");
+                String description = jsonObject.getString("Message");
+                NotificationItem notificationItem = new NotificationItem(id, description, new Date());
+                notifications.add(notificationItem);
+            }
+        } catch (Exception e) {
+            System.out.println("U are screwed");
+        }
+
+        return notifications;
     }
 
     @Override

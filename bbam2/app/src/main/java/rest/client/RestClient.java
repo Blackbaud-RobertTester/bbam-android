@@ -2,6 +2,7 @@ package rest.client;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -16,6 +17,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.widget.Toast;
 
 public class RestClient {
@@ -25,20 +27,20 @@ public class RestClient {
     String url;
     String headerName;
     String headerValue;
+    String baseUrl = "http://bbam-notifications.blackbaudcloud.com:8081";
 
-    public RestClient(String s){
-
-        url = s;
+    public RestClient(String s) {
+        url = baseUrl + s;
     }
 
 
-    public void addHeader(String name, String value){
+    public void addHeader(String name, String value) {
 
         headerName = name;
         headerValue = value;
     }
 
-    public void addParam(String key, String value){
+    public void addParam(String key, String value) {
 
         try {
             data.put(key, value);
@@ -48,7 +50,7 @@ public class RestClient {
         }
     }
 
-    public String executePost(){  // If you want to use post method to hit server
+    public String executePost() {  // If you want to use post method to hit server
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -76,10 +78,9 @@ public class RestClient {
         return result;
 
 
-
     }
 
-    public String executeGet(){ //If you want to use get method to hit server
+    public String executeGet() { //If you want to use get method to hit server
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(url);
