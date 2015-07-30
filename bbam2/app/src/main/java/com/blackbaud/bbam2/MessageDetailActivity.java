@@ -1,5 +1,6 @@
 package com.blackbaud.bbam2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import auth.NotificationService;
 import notification.NotificationDetails;
 
 
-public class MessageDetailActivity extends ActionBarActivity {
+public class MessageDetailActivity extends Activity {
 
     private TextView appId;
     private TextView description;

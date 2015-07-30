@@ -1,34 +1,28 @@
 package notification;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blackbaud.bbam2.R;
-
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by avaky on 7/30/15.
- */
+
 public class NotificationAdapter extends BaseAdapter {
 
     List<NotificationItem> list;
     LayoutInflater inflater;
 
-    public NotificationAdapter(Activity parentActivity)
+    public NotificationAdapter(Activity parentActivity, List<NotificationItem> notificationItems)
     {
         this.inflater = parentActivity.getWindow().getLayoutInflater();
-        this.list = getNotifications();
+        this.list = notificationItems;
     }
 
     @Override

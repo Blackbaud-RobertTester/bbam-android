@@ -2,6 +2,7 @@ package com.blackbaud.bbam2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import auth.AccountAuthService;
+import rest.client.RestClient;
 
 
 public class MainActivity extends Activity
 {
+    public final static String EXTRA_MESSAGE = "rest.client.MESSAGE";
+
     String email;
     String password;
 
@@ -57,10 +61,9 @@ public class MainActivity extends Activity
 
                 AccountAuthService authService = new AccountAuthService();
                 if(authService.isValid(email, password)){
-                    int id = 1;
-                    Intent move = new Intent(mainActivity, MessageList.class);
-                    move.putExtra(AccountLink.ID_KEY, id);
-                    startActivity(move);
+                    String [] params = new String[1];
+                    params[0] = "/messages/1/1";
+                    AsyncTask task = new MessagesBackgroundTask().execute(params);
                 }
                 else {
                     error.setVisibility(View.VISIBLE);
@@ -91,5 +94,34 @@ public class MainActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class MessagesBackgroundTask extends AsyncTask<String, String, String> {
+
+        private String result;
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            String urlString = params[0];
+
+            RestClient restClient = new RestClient(urlString);
+            result = restClient.executeGet();
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Intent intent = new Intent(getApplicationContext(), MessageList.class);
+
+            intent.putExtra(EXTRA_MESSAGE, result);
+
+            startActivity(intent);
+
+
+        }
     }
 }
