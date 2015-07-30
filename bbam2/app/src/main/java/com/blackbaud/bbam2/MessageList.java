@@ -1,17 +1,45 @@
 package com.blackbaud.bbam2;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import notification.NotificationAdapter;
+import notification.NotificationItem;
 
 
-public class MessageList extends ActionBarActivity {
+public class MessageList extends Activity {
+
+    ListView list;
+
+    public static final String NOTIFICATION_ITEM = "notification_item";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
+
+        this.list = (ListView) findViewById(R.id.notifList);
+        final NotificationAdapter notificationAdapter = new NotificationAdapter(this);
+        this.list.setAdapter(notificationAdapter);
+
+        final MessageList messageList = this;
+
+        this.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NotificationItem notificationItem = (NotificationItem)notificationAdapter.getItem(position);
+                Intent intent = new Intent(messageList, MessageDetailActivity.class);
+                intent.putExtra(MessageList.NOTIFICATION_ITEM, notificationItem.notificationId);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -35,4 +63,5 @@ public class MessageList extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -1,7 +1,7 @@
 package com.blackbaud.bbam2;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import auth.AccountAuthService;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener
+public class MainActivity extends Activity
 {
     String email;
     String password;
@@ -35,10 +35,43 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         create = (Button) findViewById(R.id.signUpButton);
         error = (TextView) findViewById(R.id.error);
 
-        create.setOnClickListener(this);
+        final MainActivity mainActivity = this;
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = 1;
+                Intent move = new Intent(mainActivity, AccountLink.class);
+                move.putExtra(AccountLink.ID_KEY, id);
+                startActivity(move);
+            }
+        });
+
+
+        email = this.emailInput.getText().toString();
+        password = this.passwordInput.getText().toString();
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AccountAuthService authService = new AccountAuthService();
+                if(authService.isValid(email, password)){
+                    int id = 1;
+                    Intent move = new Intent(mainActivity, MessageList.class);
+                    move.putExtra(AccountLink.ID_KEY, id);
+                    startActivity(move);
+                }
+                else {
+                    error.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 
-    @Override
+
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -58,22 +91,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-        this.email = this.emailInput.getText().toString();
-        this.password = this.passwordInput.getText().toString();
-
-        AccountAuthService authService = new AccountAuthService();
-        if(authService.isValid(this.email, this.password)){
-            int id = 1;
-            Intent move = new Intent(this, AccountLink.class);
-            move.putExtra(AccountLink.ID_KEY, id);
-            startActivity(move);
-        }
-        else {
-            error.setVisibility(View.VISIBLE);
-        }
     }
 }
