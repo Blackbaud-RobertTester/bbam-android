@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -26,7 +27,6 @@ public class MainActivity extends Activity implements View.OnClickListener
     Button create;
     EditText emailInput;
     EditText passwordInput;
-    TextView error;
 
     public static String PROJECT_ID = "102437530721";
 
@@ -39,7 +39,6 @@ public class MainActivity extends Activity implements View.OnClickListener
         passwordInput = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.loginButton);
         create = (Button) findViewById(R.id.signUpButton);
-        error = (TextView) findViewById(R.id.error);
 
         final MainActivity mainActivity = this;
 
@@ -83,10 +82,9 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        ValidatorUtil authService = new ValidatorUtil();
         String email = this.getEmail();
         String password = this.getPassword();
-        if(authService.isValid(email, password)){
+        if(ValidatorUtil.isValid(email, password)){
             switch(v.getId())
             {
                 case R.id.loginButton:
@@ -98,7 +96,7 @@ public class MainActivity extends Activity implements View.OnClickListener
             }
         }
         else {
-            error.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(), R.string.activity_main_login_error, Toast.LENGTH_SHORT).show();
         }
 
     }

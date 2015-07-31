@@ -3,6 +3,8 @@ package notification;
 import java.io.Serializable;
 import java.util.Date;
 
+import auth.ValidatorUtil;
+
 /**
  * Created by avaky on 7/30/15.
  */
@@ -34,5 +36,10 @@ public class NotificationItem implements Serializable
                 date
         );
         this.email = email;
+    }
+
+    public boolean canSendResponseEmail()
+    {
+        return ValidatorUtil.hasValue(this.email);
     }
 }

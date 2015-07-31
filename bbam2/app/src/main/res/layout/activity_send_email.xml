@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/message"
         android:inputType="textCapSentences|textMultiLine"
+        android:minLines="13"
         />
 
     <Button
