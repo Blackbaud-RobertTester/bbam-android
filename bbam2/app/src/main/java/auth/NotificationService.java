@@ -2,16 +2,16 @@ package auth;
 
 import java.util.Date;
 
-import notification.NotificationDetails;
+import notification.NotificationItem;
 
 /**
  * Created by avaky on 7/30/15.
  */
 public class NotificationService {
 
-    public NotificationDetails getNotificationDetails(int notificationId)
+    public NotificationItem getNotificationDetails(int notificationId)
     {
-        NotificationDetails notificationDetails = new NotificationDetails();
+        NotificationItem notificationDetails = new NotificationItem();
         notificationDetails.appId = 1;
         notificationDetails.notificationId = 2;
         notificationDetails.date = new Date();

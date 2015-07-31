@@ -58,13 +58,4 @@ public class NotificationAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-    public List<NotificationItem> getNotifications()
-    {
-        return Arrays.asList(
-          new NotificationItem(1, "Something happened", new Date(1985, 7, 10)),
-                new NotificationItem(2, "OMG SHOES!", new Date(1988, 8, 8)),
-                new NotificationItem(1, "YOU SHALL NOT PASS!", new Date(1985, 5, 5))
-        );
-    }
 }

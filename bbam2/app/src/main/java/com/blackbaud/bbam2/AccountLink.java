@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import apps.Apps;
@@ -30,13 +31,14 @@ public class AccountLink extends Activity implements AdapterView.OnItemSelectedL
         this.linkAccount = (Button) findViewById(R.id.linkButton);
 
         productList = (Spinner) findViewById(R.id.appSelector);
-        Apps applications = new Apps();
-        List<String> apps = applications.getApps();
+
+        List<String> apps = Arrays.asList("", "Luminate Online", "RE NXT", "BBCRM");
+
         ArrayAdapter<String> adatpter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, apps);
         adatpter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         productList.setAdapter(adatpter);
-        productList.setOnItemSelectedListener(this);
 
+        productList.setOnItemSelectedListener(this);
         linkAccount.setOnClickListener(this);
     }
 

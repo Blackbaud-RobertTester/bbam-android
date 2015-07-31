@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,22 +12,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import java.io.IOException;
+
 import auth.AccountAuthService;
+import gcm.GCMBackgroundTask;
+import notification.MessagesBackgroundTask;
 import rest.client.RestClient;
 
 
-public class MainActivity extends Activity
+public class MainActivity extends Activity implements View.OnClickListener
 {
-    public final static String EXTRA_MESSAGE = "rest.client.MESSAGE";
-
-    String email;
-    String password;
+    GoogleCloudMessaging gcm;
+    String regid;
 
     Button login;
     Button create;
     EditText emailInput;
     EditText passwordInput;
     TextView error;
+
+    public static String PROJECT_ID = "102437530721";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,40 +48,22 @@ public class MainActivity extends Activity
 
         final MainActivity mainActivity = this;
 
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = 1;
-                Intent move = new Intent(mainActivity, AccountLink.class);
-                move.putExtra(AccountLink.ID_KEY, id);
-                startActivity(move);
-            }
-        });
+        create.setOnClickListener(this);
+        login.setOnClickListener(this);
+    }
 
+    private String getEmail()
+    {
+        return emailInput.getText().toString();
+    }
 
-        email = this.emailInput.getText().toString();
-        password = this.passwordInput.getText().toString();
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AccountAuthService authService = new AccountAuthService();
-                if(authService.isValid(email, password)){
-                    String [] params = new String[1];
-                    params[0] = "/messages/1/1";
-                    AsyncTask task = new MessagesBackgroundTask().execute(params);
-                }
-                else {
-                    error.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
+    private String getPassword()
+    {
+        return passwordInput.getText().toString();
     }
 
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -96,32 +85,34 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    private class MessagesBackgroundTask extends AsyncTask<String, String, String> {
-
-        private String result;
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            String urlString = params[0];
-
-            RestClient restClient = new RestClient(urlString);
-            result = restClient.executeGet();
-
-            return result;
+    @Override
+    public void onClick(View v)
+    {
+        switch(v.getId())
+        {
+            case R.id.loginButton:
+                this.login();
+                break;
+            case R.id.signUpButton:
+                new GCMBackgroundTask(PROJECT_ID, getApplicationContext()).execute(null, null, null);
+                break;
         }
+    }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Intent intent = new Intent(getApplicationContext(), MessageList.class);
-
-            intent.putExtra(EXTRA_MESSAGE, result);
-
-            startActivity(intent);
+    private void login()
+    {
+        AccountAuthService authService = new AccountAuthService();
+        String email = this.getEmail();
+        String password = this.getPassword();
+        if(authService.isValid(email, password)){
+            AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.regid);
 
 
+            String [] params = MessagesBackgroundTask.getApiParams(this.regid);
+            task.execute(params);
+        }
+        else {
+            error.setVisibility(View.VISIBLE);
         }
     }
 }
