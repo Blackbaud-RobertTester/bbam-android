@@ -94,7 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener
                 this.login();
                 break;
             case R.id.signUpButton:
-                this.createAccount();
+                new GCMBackgroundTask(PROJECT_ID, getApplicationContext()).execute(null, null, null);
                 break;
         }
     }
@@ -114,16 +114,5 @@ public class MainActivity extends Activity implements View.OnClickListener
         else {
             error.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void createAccount()
-    {
-        GCMBackgroundTask task = new GCMBackgroundTask(PROJECT_ID, getApplicationContext());
-        task.execute(null, null, null);
-        this.regid = task.getGcmIdResult();
-
-        Intent move = new Intent(this, AccountLink.class);
-        move.putExtra(AccountLink.ID_KEY, this.regid);
-        startActivity(move);
     }
 }

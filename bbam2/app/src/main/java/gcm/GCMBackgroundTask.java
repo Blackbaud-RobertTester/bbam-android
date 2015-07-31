@@ -1,9 +1,11 @@
 package gcm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.blackbaud.bbam2.AccountLink;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
     public GCMBackgroundTask(String id, Context context)
     {
         this.projectNumber = id;
+        this.context = context;
     }
 
     public String getGcmIdResult()
@@ -45,5 +48,15 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
         }
         System.out.println(msg);
         return msg;
+    }
+
+    @Override
+    protected void onPostExecute(String msg) {
+        super.onPostExecute(msg);
+
+        Intent intent = new Intent(this.context, AccountLink.class);
+        intent.putExtra(AccountLink.ID_KEY, this.gcmIdResult);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.context.startActivity(intent);
     }
 }

@@ -11,6 +11,6 @@ public class Apps {
 
     public List<String> getApps()
     {
-        return Arrays.asList("", "Luminate Online", "RE NXT", "BBCRM");
+        return null;
     }
 }
