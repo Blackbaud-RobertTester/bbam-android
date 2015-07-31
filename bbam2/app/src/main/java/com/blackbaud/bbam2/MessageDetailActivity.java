@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import apps.LinkerUtil;
@@ -13,11 +15,12 @@ import gcm.GCMUtil;
 import notification.NotificationItem;
 
 
-public class MessageDetailActivity extends Activity {
+public class MessageDetailActivity extends Activity implements View.OnClickListener{
 
     private TextView appId;
     private TextView description;
     private TextView date;
+    private Button email;
 
     String gcm;
 
@@ -35,6 +38,7 @@ public class MessageDetailActivity extends Activity {
         this.appId = (TextView)findViewById(R.id.appId);
         this.description = (TextView)findViewById(R.id.description);
         this.date = (TextView)findViewById(R.id.date);
+        this.email = (Button) findViewById(R.id.emailButton);
 
         appId.setText(String.valueOf(notification.appId));
         description.setText(notification.description);
@@ -70,5 +74,10 @@ public class MessageDetailActivity extends Activity {
     private void navToLinkAccount() {
         Intent intent = new Intent(this, AppSelection.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
