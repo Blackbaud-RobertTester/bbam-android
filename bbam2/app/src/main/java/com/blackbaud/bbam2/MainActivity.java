@@ -83,10 +83,9 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        ValidatorUtil authService = new ValidatorUtil();
         String email = this.getEmail();
         String password = this.getPassword();
-        if(authService.isValid(email, password)){
+        if(ValidatorUtil.isValid(email, password)){
             switch(v.getId())
             {
                 case R.id.loginButton:

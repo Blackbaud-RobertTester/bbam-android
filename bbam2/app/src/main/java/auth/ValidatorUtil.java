@@ -5,17 +5,20 @@ package auth;
  */
 public class ValidatorUtil
 {
-    public ValidatorUtil(){}
-
-    public boolean isValid(String email, String password)
+    public static boolean isValid(String email, String password)
     {
-        boolean validEmail = this.hasValue(email);
-        boolean validPassword = this.hasValue(password);
-        return this.hasValue(email) && this.hasValue(password);
+        boolean validEmail = hasValue(email);
+        boolean validPassword = hasValue(password);
+        return validEmail && validPassword;
     }
 
-    private boolean hasValue(String item)
+    public static boolean hasValue(String item)
     {
         return item != null && ! item.isEmpty();
+    }
+
+    public static boolean hasNoValue(String item)
+    {
+        return ! hasValue(item);
     }
 }

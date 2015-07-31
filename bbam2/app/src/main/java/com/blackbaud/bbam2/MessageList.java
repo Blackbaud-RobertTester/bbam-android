@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import apps.LinkerUtil;
+import auth.ValidatorUtil;
 import gcm.GCMUtil;
 import notification.MessagesBackgroundTask;
 import notification.NotificationAdapter;
@@ -74,10 +75,22 @@ public class MessageList extends Activity {
                 int id = jsonObject.getInt("Id");
                 int appid = jsonObject.getInt("AppId");
                 String description = jsonObject.getString("Message");
+                String emailRecipient = jsonObject.getString("ResponseEmailAddress");
+
                 String ts = jsonObject.getString("TimeCreated");
                 SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date date = format.parse(ts.substring(0, ts.length() - 8));
-                NotificationItem notificationItem = new NotificationItem(id, appid, description, date);
+
+                NotificationItem notificationItem;
+                if(ValidatorUtil.hasValue(emailRecipient))
+                {
+                    notificationItem = new NotificationItem(id, appid, description, date, emailRecipient);
+                }
+                else
+                {
+                    notificationItem = new NotificationItem(id, appid, description, date);
+                }
+
                 notifications.add(notificationItem);
             }
         } catch (Exception e) {
