@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import apps.LinkerUtil;
+import gcm.GCMUtil;
 import notification.MessagesBackgroundTask;
 import notification.NotificationAdapter;
 import notification.NotificationItem;
@@ -33,6 +35,8 @@ public class MessageList extends Activity {
 
     public static final String NOTIFICATION_ITEM = "notification_item";
 
+    String gcm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,8 @@ public class MessageList extends Activity {
 
         Intent intent = getIntent();
         List<NotificationItem> notificationItems = getNotificaitons(intent);
+
+        this.gcm = GCMUtil.getGCM(intent);
 
         this.list = (ListView) findViewById(R.id.notifList);
         final NotificationAdapter notificationAdapter = new NotificationAdapter(this, notificationItems);
@@ -87,6 +93,13 @@ public class MessageList extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_notification_detail, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -96,7 +109,7 @@ public class MessageList extends Activity {
             case R.id.action_settings:
                 return true;
             case R.id.action_add_login:
-                navToLinkAccount();
+                LinkerUtil.navToLinkAccount(this, this.gcm);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

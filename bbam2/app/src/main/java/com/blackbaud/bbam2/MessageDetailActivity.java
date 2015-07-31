@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import apps.LinkerUtil;
 import auth.NotificationService;
+import gcm.GCMUtil;
 import notification.NotificationItem;
 
 
@@ -17,6 +19,8 @@ public class MessageDetailActivity extends Activity {
     private TextView description;
     private TextView date;
 
+    String gcm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,8 @@ public class MessageDetailActivity extends Activity {
         //We need to go and fetch the details about the message.
         Intent intent = getIntent();
         NotificationItem notification = (NotificationItem) intent.getSerializableExtra(MessageList.NOTIFICATION_ITEM);
+
+        this.gcm = GCMUtil.getGCM(intent);
 
         this.appId = (TextView)findViewById(R.id.appId);
         this.description = (TextView)findViewById(R.id.description);
@@ -53,7 +59,7 @@ public class MessageDetailActivity extends Activity {
             case R.id.action_settings:
                 return true;
             case R.id.action_add_login:
-                navToLinkAccount();
+                LinkerUtil.navToLinkAccount(this, this.gcm);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

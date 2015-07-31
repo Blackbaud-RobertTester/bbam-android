@@ -25,8 +25,8 @@ public class RestClient {
 
     JSONObject data = new JSONObject();
     String url;
-    String headerName;
-    String headerValue;
+    String headerName = "";
+    String headerValue = "";
     String baseUrl = "http://bbam-notifications.blackbaudcloud.com:8081";
 
     public RestClient(String s) {
@@ -74,6 +74,9 @@ public class RestClient {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+        finally {
+
         }
         return result;
 

@@ -13,7 +13,8 @@ import android.widget.TextView;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import auth.AccountAuthService;
-import gcm.GCMBackgroundTask;
+import auth.LoginTask;
+import gcm.GCMCreationTask;
 import notification.MessagesBackgroundTask;
 import rest.client.RestApiUtil;
 
@@ -84,31 +85,35 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        switch(v.getId())
-        {
-            case R.id.loginButton:
-                this.login();
-                break;
-            case R.id.signUpButton:
-                new GCMBackgroundTask(PROJECT_ID, getApplicationContext()).execute(null, null, null);
-                break;
-        }
-    }
-
-    private void login()
-    {
         AccountAuthService authService = new AccountAuthService();
         String email = this.getEmail();
         String password = this.getPassword();
         if(authService.isValid(email, password)){
-            AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.regid);
-
-
-            String [] params = RestApiUtil.getMessagesApiParamString(this.regid);
-            task.execute(params);
+            switch(v.getId())
+            {
+                case R.id.loginButton:
+                    this.login(email, password);
+                    break;
+                case R.id.signUpButton:
+                    createAccount(email, password);
+                    break;
+            }
         }
         else {
             error.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    private void createAccount(String email, String password)
+    {
+        new GCMCreationTask(PROJECT_ID, getApplicationContext(), email, password).execute(null, null, null);
+    }
+
+    private void login(String email, String password)
+    {
+        LoginTask task = new LoginTask(getApplicationContext());
+        String[] params = RestApiUtil.getLoginParams(email, password);
+        task.execute(params);
     }
 }

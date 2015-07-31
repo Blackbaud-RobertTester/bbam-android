@@ -20,6 +20,7 @@ import java.util.List;
 
 import gcm.GCMUtil;
 import notification.MessagesBackgroundTask;
+import rest.client.RestApiUtil;
 
 
 public class AccountLink extends Activity implements View.OnClickListener
@@ -68,7 +69,7 @@ public class AccountLink extends Activity implements View.OnClickListener
     public void onClick(View v) {
         //auth to service
         AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
-        String [] params = MessagesBackgroundTask.getApiParams(this.gcm);
+        String[] params = RestApiUtil.getMessagesApiParamString(this.gcm);
         task.execute(params);
     }
 }
