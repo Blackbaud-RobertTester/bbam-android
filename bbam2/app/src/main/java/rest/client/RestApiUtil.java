@@ -60,4 +60,34 @@ public class RestApiUtil
     {
         return params[2];
     }
+
+    public static String[] getLinkAcctParams(String appLogin, String appPw, String gcm, String appId)
+    {
+        return new String[] { "/link", appLogin, appPw, gcm, appId };
+    }
+
+    public static String getLinkAcctEndpoint(String[] params)
+    {
+        return params[0];
+    }
+
+    public static String getLinkAcctAppLogin(String[] params)
+    {
+        return params[1];
+    }
+
+    public static String getLinkAcctAppPassword(String[] params)
+    {
+        return params[2];
+    }
+
+    public static String getLinkAcctGCM(String[] params)
+    {
+        return params[3];
+    }
+
+    public static String getLinkAcctAppId(String[] params)
+    {
+        return params[4];
+    }
 }
