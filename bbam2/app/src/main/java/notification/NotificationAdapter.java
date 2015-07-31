@@ -1,6 +1,8 @@
 package notification;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.blackbaud.bbam2.R;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -47,6 +51,7 @@ public class NotificationAdapter extends BaseAdapter {
         }
 
         TextView appId = (TextView) convertView.findViewById(R.id.appId);
+        TextView listItemBullet = (TextView) convertView.findViewById(R.id.bullet);
         TextView description = (TextView) convertView.findViewById(R.id.description);
         TextView date = (TextView) convertView.findViewById(R.id.date);
 
@@ -55,6 +60,19 @@ public class NotificationAdapter extends BaseAdapter {
         appId.setText(String.valueOf(item.appId));
         description.setText(item.description);
         date.setText(item.date.toString());
+        listItemBullet.setText(Html.fromHtml("&#8226;")); // ho ho ho
+
+        switch(item.appId)
+        {
+            case 1:
+                listItemBullet.setTextColor(Color.parseColor("#00a5e4"));
+                break;
+            case 2:
+                listItemBullet.setTextColor(Color.parseColor("#f47c26"));
+                break;
+            default:
+                break;
+        }
 
         return convertView;
     }
