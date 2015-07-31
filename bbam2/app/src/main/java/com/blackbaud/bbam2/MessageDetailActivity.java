@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import apps.LinkerUtil;
+import auth.ValidatorUtil;
 import gcm.GCMUtil;
 import notification.NotificationItem;
 
@@ -48,6 +49,11 @@ public class MessageDetailActivity extends Activity implements View.OnClickListe
         date.setText(notification.date.toString());
 
         this.emailButton.setOnClickListener(this);
+
+        if(ValidatorUtil.hasNoValue(this.recipient))
+        {
+            this.emailButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ValidatorUtil
 
     public static boolean hasValue(String item)
     {
-        return item != null && ! item.isEmpty();
+        return item != null && ! item.isEmpty() && ! item.equals("null");
     }
 
     public static boolean hasNoValue(String item)
