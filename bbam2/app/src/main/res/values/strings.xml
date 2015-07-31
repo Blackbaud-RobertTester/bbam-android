@@ -16,5 +16,6 @@
     <string name="notification_list_bullet">&#xf111;</string>
     <string name="title_activity_send_email">SendEmail</string>
     <string name="bb_logo_description">Powered by Blackbaud</string>
+    <string name="title_activity_splash"></string>
 
 </resources>
