@@ -8,6 +8,7 @@ import com.blackbaud.bbam2.AccountLink;
 import com.blackbaud.bbam2.MessageList;
 
 import gcm.GCMUtil;
+import rest.client.RestApiUtil;
 import rest.client.RestClient;
 
 /**
@@ -31,8 +32,7 @@ public class MessagesBackgroundTask extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String urlString = params[0];
-
+        String urlString = RestApiUtil.getMessageApiCall(params);
         RestClient restClient = new RestClient(urlString);
         result = restClient.executeGet();
 

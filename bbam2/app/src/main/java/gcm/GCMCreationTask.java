@@ -11,20 +11,27 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
+import auth.RegisterTask;
+import rest.client.RestApiUtil;
+
 /**
  * Created by avaky on 7/30/15.
  */
-public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
+public class GCMCreationTask extends AsyncTask<Void, Void, String>
+{
+    final String projectNumber;
+    final Context context;
+    final String email;
+    final String password;
 
-    GoogleCloudMessaging gcm;
-    String projectNumber;
-    Context context;
     String gcmIdResult;
 
-    public GCMBackgroundTask(String id, Context context)
+    public GCMCreationTask(String id, Context context, String email, String password)
     {
         this.projectNumber = id;
         this.context = context;
+        this.email = email;
+        this.password = password;
     }
 
     public String getGcmIdResult()
@@ -35,6 +42,7 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         String msg = "";
+        GoogleCloudMessaging gcm = null;
         try {
             if (gcm == null) {
                 gcm = GoogleCloudMessaging.getInstance(this.context);
@@ -45,7 +53,6 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
 
         } catch (IOException ex) {
             msg = "Error :" + ex.getMessage();
-
         }
         System.out.println(msg);
         return msg;
@@ -54,10 +61,8 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String msg) {
         super.onPostExecute(msg);
-
-        Intent intent = new Intent(this.context, AppSelection.class);
-        GCMUtil.setGCM(intent, this.gcmIdResult);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.context.startActivity(intent);
+        RegisterTask task = new RegisterTask(this.context);
+        String[] params = RestApiUtil.getRegistraitonParams(this.email, this.password, this.gcmIdResult);
+        task.execute(params);
     }
 }
