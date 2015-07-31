@@ -3,9 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_account_link">AccountLink</string>
-    <string name="title_activity_message_list">MessageList</string>
-    <string name="title_activity_notification_detail">NotificationDetailActivity</string>
+    <string name="title_activity_account_link">Account Link</string>
+    <string name="title_activity_message_list">Messages</string>
+    <string name="title_activity_notification_detail">Message Detail</string>
     <string name="activity_main_login_error">Invalid login</string>
-    <string name="title_activity_app_selection">AppSelection</string>
+    <string name="title_activity_app_selection">Select Your App</string>
 </resources>
