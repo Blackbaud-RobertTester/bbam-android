@@ -63,7 +63,7 @@
         <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash" >
-            <intent-filter>
+            <intent-filter android:label="b-BAM!">
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

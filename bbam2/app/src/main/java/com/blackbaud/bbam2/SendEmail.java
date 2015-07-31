@@ -42,11 +42,6 @@ public class SendEmail extends Activity implements View.OnClickListener
 
         this.send = (Button) findViewById(R.id.sendButton);
         this.send.setOnClickListener(this);
-
-        if(ValidatorUtil.hasNoValue(email))
-        {
-            //this.send.setVisibility(View.INVISIBLE);
-        }
     }
 
     @Override

@@ -110,12 +110,6 @@ public class MessageDetailActivity extends Activity implements View.OnClickListe
         }
     }
 
-    // TODO: pull into util class
-    private void navToLinkAccount() {
-        Intent intent = new Intent(this, AppSelection.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View v)
     {

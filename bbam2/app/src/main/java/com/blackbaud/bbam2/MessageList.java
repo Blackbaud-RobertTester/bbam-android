@@ -123,10 +123,4 @@ public class MessageList extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    // TODO: pull into util class
-    private void navToLinkAccount() {
-        Intent intent = new Intent(this, AppSelection.class);
-        startActivity(intent);
-    }
 }
