@@ -66,6 +66,8 @@ public class AppsAdapter extends BaseAdapter
             case 2:
                 bulletText.setTextColor(Color.parseColor("#f47c26"));
                 break;
+            case 3:
+                bulletText.setTextColor(Color.parseColor("#eff709"));
             default:
                 bulletText.setTextColor(Color.argb(50, 0, 0, 0));
                 break;

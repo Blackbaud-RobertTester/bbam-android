@@ -70,6 +70,8 @@ public class NotificationAdapter extends BaseAdapter {
             case 2:
                 listItemBullet.setTextColor(Color.parseColor("#f47c26"));
                 break;
+            case 3:
+                listItemBullet.setTextColor(Color.parseColor("#eff709"));
             default:
                 break;
         }
