@@ -68,6 +68,7 @@ public class AppsAdapter extends BaseAdapter
                 break;
             case 3:
                 bulletText.setTextColor(Color.parseColor("#eff709"));
+                break;
             default:
                 bulletText.setTextColor(Color.argb(50, 0, 0, 0));
                 break;
