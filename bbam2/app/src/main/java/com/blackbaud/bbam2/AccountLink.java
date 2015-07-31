@@ -10,11 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.List;
-
-import apps.Apps;
 
 
 public class AccountLink extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener{
@@ -30,15 +31,10 @@ public class AccountLink extends Activity implements AdapterView.OnItemSelectedL
 
         this.linkAccount = (Button) findViewById(R.id.linkButton);
 
-        productList = (Spinner) findViewById(R.id.appSelector);
+        TextView selectedApp = (TextView) findViewById(R.id.appSelector);
+        final String app = getIntent().getStringExtra(AppSelection.APP_SELECTION_ITEM);
+        selectedApp.setText(app);
 
-        List<String> apps = Arrays.asList("", "Luminate Online", "RE NXT", "BBCRM");
-
-        ArrayAdapter<String> adatpter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, apps);
-        adatpter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        productList.setAdapter(adatpter);
-
-        productList.setOnItemSelectedListener(this);
         linkAccount.setOnClickListener(this);
     }
 
