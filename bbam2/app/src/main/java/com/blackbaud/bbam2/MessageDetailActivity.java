@@ -10,19 +10,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import apps.LinkerUtil;
-import auth.NotificationService;
 import gcm.GCMUtil;
 import notification.NotificationItem;
 
 
-public class MessageDetailActivity extends Activity implements View.OnClickListener{
+public class MessageDetailActivity extends Activity implements View.OnClickListener
+{
+    public static final String EMAIL_RECIPIENT = "recipient";
 
     private TextView appId;
     private TextView description;
     private TextView date;
-    private Button email;
+    private Button emailButton;
 
     String gcm;
+    String recipient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +35,19 @@ public class MessageDetailActivity extends Activity implements View.OnClickListe
         Intent intent = getIntent();
         NotificationItem notification = (NotificationItem) intent.getSerializableExtra(MessageList.NOTIFICATION_ITEM);
 
+        this.recipient = notification.email;
         this.gcm = GCMUtil.getGCM(intent);
 
         this.appId = (TextView)findViewById(R.id.appId);
         this.description = (TextView)findViewById(R.id.description);
         this.date = (TextView)findViewById(R.id.date);
-        this.email = (Button) findViewById(R.id.emailButton);
+        this.emailButton = (Button) findViewById(R.id.emailButton);
 
         appId.setText(String.valueOf(notification.appId));
         description.setText(notification.description);
         date.setText(notification.date.toString());
 
+        this.emailButton.setOnClickListener(this);
     }
 
     @Override
@@ -77,7 +81,11 @@ public class MessageDetailActivity extends Activity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-
+    public void onClick(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), SendEmail.class);
+        GCMUtil.setGCM(intent, this.gcm);
+        intent.putExtra(EMAIL_RECIPIENT, this.recipient);
+        startActivity(intent);
     }
 }

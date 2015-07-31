@@ -12,5 +12,6 @@
     <string name="activity_main_login_error">Invalid login</string>
     <string name="notification_detail_send_email_button">Send Email!</string>
     <string name="notification_list_bullet">&#xf111;</string>
+    <string name="title_activity_send_email">SendEmail</string>
 
 </resources>

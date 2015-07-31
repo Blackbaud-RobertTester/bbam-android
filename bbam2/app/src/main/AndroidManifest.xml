@@ -61,6 +61,10 @@
             android:name=".AppSelection"
             android:label="@string/title_activity_app_selection" >
         </activity>
+        <activity
+            android:name=".SendEmail"
+            android:label="@string/title_activity_send_email" >
+        </activity>
     </application>
 
 </manifest>

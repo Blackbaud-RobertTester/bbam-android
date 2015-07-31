@@ -12,6 +12,7 @@ public class NotificationItem implements Serializable
     public int notificationId;
     public String description;
     public Date date;
+    public String email;
 
     public NotificationItem(){}
 
@@ -21,5 +22,17 @@ public class NotificationItem implements Serializable
         this.notificationId = notifId;
         this.description = description;
         this.date = date;
+        this.email = "";
+    }
+
+    public NotificationItem(int notifId, int appId, String description, Date date, String email)
+    {
+        this(
+                notifId,
+                appId,
+                description,
+                date
+        );
+        this.email = email;
     }
 }
