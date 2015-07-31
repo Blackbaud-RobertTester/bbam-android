@@ -6,4 +6,5 @@
     <string name="title_activity_account_link">AccountLink</string>
     <string name="title_activity_message_list">MessageList</string>
     <string name="title_activity_notification_detail">NotificationDetailActivity</string>
+    <string name="activity_main_login_error">Invalid login</string>
 </resources>

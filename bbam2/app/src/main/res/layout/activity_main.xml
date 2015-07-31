@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="log in information is wrong!"
+        android:text="@string/activity_main_login_error"
         android:id="@+id/error"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
