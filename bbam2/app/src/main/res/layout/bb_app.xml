@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:padding="10dp">
+
+    <TextView
+        android:textSize="50sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_list_bullet"
+        android:id="@+id/bullet"
+        />
 
     <TextView
         android:textSize="@dimen/abc_text_size_large_material"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/abc_list_item_padding_horizontal_material"
-        android:id="@+id/appName"/>
+        android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
+        android:paddingBottom="20dp"
+        android:id="@+id/appName"
+        />
+
+    <TextView
+        android:textSize="@dimen/abc_text_size_body_1_material"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/appId"
+        />
+
 </LinearLayout>

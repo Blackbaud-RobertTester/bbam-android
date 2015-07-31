@@ -29,9 +29,9 @@ public class AppSelection extends Activity
 
         final String gcm = GCMUtil.getGCM(getIntent());
 
-        List<BBApp> apps = Arrays.asList(new BBApp("Luminate Online"),
-                                         new BBApp("RE NXT"),
-                                         new BBApp("BBCRM"));
+        List<BBApp> apps = Arrays.asList(new BBApp("Luminate Online", 1),
+                                         new BBApp("RE NXT", 2),
+                                         new BBApp("BBCRM", 3));
 
         setContentView(R.layout.activity_app_selection);
         this.leList = (ListView) findViewById(R.id.appList);
