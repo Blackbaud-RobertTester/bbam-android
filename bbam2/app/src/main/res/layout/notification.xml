@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/abc_list_item_padding_horizontal_material"
-    android:paddingTop="@dimen/abc_list_item_padding_horizontal_material"
+    android:paddingTop="10dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp">
 
@@ -12,36 +12,41 @@
         android:layout_height="wrap_content"
         android:paddingEnd="10dp"
         android:paddingRight="10dp"
-        android:textSize="30dp"
+        android:textSize="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/bullet"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/bullet"
+        android:layout_toRightOf="@+id/bullet"
+        android:paddingTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:singleLine="true"
+            android:id="@+id/description"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_caption_material"
+            android:id="@+id/date"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:id="@+id/appId"
-        />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/bullet"
-        android:layout_toRightOf="@+id/bullet"
-        android:textSize="@dimen/abc_text_size_title_material"
-        android:singleLine="true"
-        android:id="@+id/description"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/description"
-        android:layout_toEndOf="@+id/bullet"
-        android:layout_toRightOf="@+id/bullet"
-        android:textSize="@dimen/abc_text_size_caption_material"
-        android:id="@+id/date"
         />
 
 </RelativeLayout>
