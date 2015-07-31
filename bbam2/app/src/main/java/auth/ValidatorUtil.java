@@ -3,9 +3,9 @@ package auth;
 /**
  * Created by avaky on 7/30/15.
  */
-public class AccountAuthService
+public class ValidatorUtil
 {
-    public AccountAuthService(){}
+    public ValidatorUtil(){}
 
     public boolean isValid(String email, String password)
     {

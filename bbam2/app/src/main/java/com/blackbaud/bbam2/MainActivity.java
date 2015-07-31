@@ -1,7 +1,6 @@
 package com.blackbaud.bbam2;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +11,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import auth.AccountAuthService;
+import auth.ValidatorUtil;
 import auth.LoginTask;
 import gcm.GCMCreationTask;
-import notification.MessagesBackgroundTask;
 import rest.client.RestApiUtil;
 
 
@@ -85,7 +83,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        AccountAuthService authService = new AccountAuthService();
+        ValidatorUtil authService = new ValidatorUtil();
         String email = this.getEmail();
         String password = this.getPassword();
         if(authService.isValid(email, password)){
