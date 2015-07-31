@@ -10,5 +10,6 @@
     <string name="text_add_login">Link Account</string>
 
     <string name="activity_main_login_error">Invalid login</string>
+    <string name="notification_list_bullet">&#8226;</string>
 
 </resources>

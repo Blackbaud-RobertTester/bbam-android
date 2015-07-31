@@ -1,12 +1,8 @@
 package com.blackbaud.bbam2;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
-import android.util.TimeUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +11,6 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.security.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +33,7 @@ public class MessageList extends Activity {
         setContentView(R.layout.activity_message_list);
 
         Intent intent = getIntent();
-        List<NotificationItem> notificationItems = getNotificaitons(intent);
+        List<NotificationItem> notificationItems = getNotifications(intent);
 
         this.list = (ListView) findViewById(R.id.notifList);
         final NotificationAdapter notificationAdapter = new NotificationAdapter(this, notificationItems);
@@ -58,11 +52,11 @@ public class MessageList extends Activity {
         });
     }
 
-    public List<NotificationItem> getNotificaitons(Intent intent) {
-        return getNotificaitons(intent.getStringExtra(MessagesBackgroundTask.EXTRA_MESSAGE));
+    public List<NotificationItem> getNotifications(Intent intent) {
+        return getNotifications(intent.getStringExtra(MessagesBackgroundTask.EXTRA_MESSAGE));
     }
 
-    public static List<NotificationItem> getNotificaitons(String result) {
+    public static List<NotificationItem> getNotifications(String result) {
         List<NotificationItem> notifications = new ArrayList<>();
 
         try {
