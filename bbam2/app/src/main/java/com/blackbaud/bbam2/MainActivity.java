@@ -1,10 +1,8 @@
 package com.blackbaud.bbam2;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +12,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import java.io.IOException;
-
 import auth.AccountAuthService;
 import gcm.GCMBackgroundTask;
 import notification.MessagesBackgroundTask;
-import rest.client.RestClient;
+import rest.client.RestApiUtil;
 
 
 public class MainActivity extends Activity implements View.OnClickListener
@@ -108,7 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener
             AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.regid);
 
 
-            String [] params = MessagesBackgroundTask.getApiParams(this.regid);
+            String [] params = RestApiUtil.getMessagesApiParamString(this.regid);
             task.execute(params);
         }
         else {

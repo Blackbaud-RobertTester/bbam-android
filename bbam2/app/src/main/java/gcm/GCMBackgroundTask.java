@@ -56,7 +56,7 @@ public class GCMBackgroundTask extends AsyncTask<Void, Void, String> {
         super.onPostExecute(msg);
 
         Intent intent = new Intent(this.context, AppSelection.class);
-        intent.putExtra(AccountLink.ID_KEY, this.gcmIdResult);
+        GCMUtil.setGCM(intent, this.gcmIdResult);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.context.startActivity(intent);
     }

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.blackbaud.bbam2.AccountLink;
 import com.blackbaud.bbam2.MessageList;
 
+import gcm.GCMUtil;
 import rest.client.RestClient;
 
 /**
@@ -26,12 +27,7 @@ public class MessagesBackgroundTask extends AsyncTask<String, String, String> {
         this.id = gcmId;
     }
 
-    public static String [] getApiParams(String gcmId)
-    {
-        String [] params = new String[1];
-        params[0] = "/messages/1";
-        return params;
-    }
+
 
     @Override
     protected String doInBackground(String... params) {
@@ -49,7 +45,7 @@ public class MessagesBackgroundTask extends AsyncTask<String, String, String> {
 
         Intent intent = new Intent(this.context, MessageList.class);
         intent.putExtra(EXTRA_MESSAGE, result);
-        intent.putExtra(AccountLink.ID_KEY, this.id);
+        GCMUtil.setGCM(intent, this.id);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.context.startActivity(intent);
     }

@@ -15,19 +15,19 @@ import java.util.List;
 
 import apps.AppsAdapter;
 import apps.BBApp;
+import gcm.GCMUtil;
 
 
 public class AppSelection extends Activity
 {
     public static final String APP_SELECTION_ITEM = "app_selection_item";
-    String gcmId;
     ListView leList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.gcmId = getIntent().getStringExtra(AccountLink.ID_KEY);
+        final String gcm = GCMUtil.getGCM(getIntent());
 
         List<BBApp> apps = Arrays.asList(new BBApp("Luminate Online"),
                                          new BBApp("RE NXT"),
@@ -38,7 +38,6 @@ public class AppSelection extends Activity
         final AppsAdapter appsAdapter = new AppsAdapter(this, apps);
         this.leList.setAdapter(appsAdapter);
 
-
         final AppSelection appSelection = this;
 
         this.leList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,6 +45,7 @@ public class AppSelection extends Activity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BBApp bbApp = (BBApp) appsAdapter.getItem(position);
                 Intent intent = new Intent(appSelection, AccountLink.class);
+                GCMUtil.setGCM(intent, gcm);
                 intent.putExtra(AppSelection.APP_SELECTION_ITEM, bbApp.appName);
                 startActivity(intent);
             }
