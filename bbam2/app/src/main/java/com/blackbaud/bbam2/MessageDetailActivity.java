@@ -2,14 +2,13 @@ package com.blackbaud.bbam2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import auth.NotificationService;
-import notification.NotificationDetails;
+import notification.NotificationItem;
 
 
 public class MessageDetailActivity extends Activity {
@@ -25,18 +24,15 @@ public class MessageDetailActivity extends Activity {
 
         //We need to go and fetch the details about the message.
         Intent intent = getIntent();
-        int notificationId = intent.getIntExtra(MessageList.NOTIFICATION_ITEM, 0);
-
-        NotificationService notificationService = new NotificationService();
-        NotificationDetails notificationDetails = notificationService.getNotificationDetails(notificationId);
+        NotificationItem notification = (NotificationItem) intent.getSerializableExtra(MessageList.NOTIFICATION_ITEM);
 
         this.appId = (TextView)findViewById(R.id.appId);
         this.description = (TextView)findViewById(R.id.description);
         this.date = (TextView)findViewById(R.id.date);
 
-        appId.setText(String.valueOf(notificationDetails.appId));
-        description.setText(notificationDetails.description);
-        date.setText(notificationDetails.date.toString());
+        appId.setText(String.valueOf(notification.appId));
+        description.setText(notification.description);
+        date.setText(notification.date.toString());
 
     }
 

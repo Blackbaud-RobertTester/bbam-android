@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.TimeUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +15,14 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.security.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import notification.MessagesBackgroundTask;
 import notification.NotificationAdapter;
 import notification.NotificationItem;
 
@@ -33,7 +39,7 @@ public class MessageList extends Activity {
         setContentView(R.layout.activity_message_list);
 
         Intent intent = getIntent();
-        List<NotificationItem> notificationItems = getNotificaitons(intent.getStringExtra(MainActivity.EXTRA_MESSAGE));
+        List<NotificationItem> notificationItems = getNotificaitons(intent);
 
         this.list = (ListView) findViewById(R.id.notifList);
         final NotificationAdapter notificationAdapter = new NotificationAdapter(this, notificationItems);
@@ -46,13 +52,17 @@ public class MessageList extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotificationItem notificationItem = (NotificationItem) notificationAdapter.getItem(position);
                 Intent intent = new Intent(messageList, MessageDetailActivity.class);
-                intent.putExtra(MessageList.NOTIFICATION_ITEM, notificationItem.notificationId);
+                intent.putExtra(MessageList.NOTIFICATION_ITEM, notificationItem);
                 startActivity(intent);
             }
         });
     }
 
-    private List<NotificationItem> getNotificaitons(String result) {
+    public List<NotificationItem> getNotificaitons(Intent intent) {
+        return getNotificaitons(intent.getStringExtra(MessagesBackgroundTask.EXTRA_MESSAGE));
+    }
+
+    public static List<NotificationItem> getNotificaitons(String result) {
         List<NotificationItem> notifications = new ArrayList<>();
 
         try {
@@ -61,8 +71,12 @@ public class MessageList extends Activity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 int id = jsonObject.getInt("Id");
+                int appid = jsonObject.getInt("AppId");
                 String description = jsonObject.getString("Message");
-                NotificationItem notificationItem = new NotificationItem(id, description, new Date());
+                String ts = jsonObject.getString("TimeCreated");
+                SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.mmmmmm'Z'");
+                Date date = format.parse(ts);
+                NotificationItem notificationItem = new NotificationItem(id, appid, description, date);
                 notifications.add(notificationItem);
             }
         } catch (Exception e) {

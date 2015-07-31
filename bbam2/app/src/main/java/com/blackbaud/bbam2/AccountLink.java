@@ -35,8 +35,8 @@ public class AccountLink extends Activity implements AdapterView.OnItemSelectedL
         ArrayAdapter<String> adatpter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, apps);
         adatpter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         productList.setAdapter(adatpter);
-        productList.setOnItemSelectedListener(this);
 
+        productList.setOnItemSelectedListener(this);
         linkAccount.setOnClickListener(this);
     }
 
