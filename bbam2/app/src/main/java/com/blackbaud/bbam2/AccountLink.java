@@ -2,6 +2,7 @@ package com.blackbaud.bbam2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +18,10 @@ import org.w3c.dom.Text;
 import java.util.Arrays;
 import java.util.List;
 
+import notification.MessagesBackgroundTask;
 
-public class AccountLink extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener{
+
+public class AccountLink extends Activity implements View.OnClickListener{
     public static final String ID_KEY = "id";
 
     Spinner productList;
@@ -61,20 +64,10 @@ public class AccountLink extends Activity implements AdapterView.OnItemSelectedL
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String thing = (String) parent.getItemAtPosition(position);
-        //
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    @Override
     public void onClick(View v) {
         //auth to service
-        Intent intent = new Intent(this, MessageList.class);
-        startActivity(intent);
+        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), "foo");
+        String [] params = MessagesBackgroundTask.getApiParams("foo");
+        task.execute(params);
     }
 }

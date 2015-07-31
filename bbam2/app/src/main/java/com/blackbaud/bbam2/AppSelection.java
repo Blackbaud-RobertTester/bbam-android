@@ -20,12 +20,14 @@ import apps.BBApp;
 public class AppSelection extends Activity
 {
     public static final String APP_SELECTION_ITEM = "app_selection_item";
-
+    String gcmId;
     ListView leList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.gcmId = getIntent().getStringExtra(AccountLink.ID_KEY);
 
         List<BBApp> apps = Arrays.asList(new BBApp("Luminate Online"),
                                          new BBApp("RE NXT"),
