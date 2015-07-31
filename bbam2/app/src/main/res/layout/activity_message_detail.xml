@@ -7,8 +7,16 @@
     tools:context="com.blackbaud.bbam2.MessageDetailActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:id="@+id/bullet"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         android:id="@+id/appId"
         />
 
@@ -27,6 +35,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/notification_detail_send_email_button"
         android:id="@+id/emailButton"
         />
 
