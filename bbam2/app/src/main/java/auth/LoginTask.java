@@ -2,6 +2,9 @@ package auth;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.blackbaud.bbam2.R;
 
 import notification.MessagesBackgroundTask;
 import rest.client.RestApiUtil;
@@ -46,8 +49,15 @@ public class LoginTask extends AsyncTask<String, String, String>
     {
         super.onPostExecute(s);
 
-        AsyncTask task = new MessagesBackgroundTask(this.context, this.gcm);
-        String[] apiEndpoint = RestApiUtil.getMessagesApiParamString(this.gcm);
-        task.execute(apiEndpoint);
+        if(ValidatorUtil.hasNoValue(this.gcm))
+        {
+            Toast.makeText(this.context, R.string.activity_main_login_error, Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            AsyncTask task = new MessagesBackgroundTask(this.context, this.gcm);
+            String[] apiEndpoint = RestApiUtil.getMessagesApiParamString(this.gcm);
+            task.execute(apiEndpoint);
+        }
     }
 }
