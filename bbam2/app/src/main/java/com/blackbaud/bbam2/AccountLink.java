@@ -18,14 +18,14 @@ import org.w3c.dom.Text;
 import java.util.Arrays;
 import java.util.List;
 
+import gcm.GCMUtil;
 import notification.MessagesBackgroundTask;
 
 
-public class AccountLink extends Activity implements View.OnClickListener{
-    public static final String ID_KEY = "id";
-
-    Spinner productList;
+public class AccountLink extends Activity implements View.OnClickListener
+{
     Button linkAccount;
+    String gcm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class AccountLink extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_account_link);
 
         this.linkAccount = (Button) findViewById(R.id.linkButton);
+        this.gcm = GCMUtil.getGCM(getIntent());
 
         TextView selectedApp = (TextView) findViewById(R.id.appSelector);
         final String app = getIntent().getStringExtra(AppSelection.APP_SELECTION_ITEM);
@@ -66,8 +67,8 @@ public class AccountLink extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         //auth to service
-        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), "foo");
-        String [] params = MessagesBackgroundTask.getApiParams("foo");
+        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
+        String [] params = MessagesBackgroundTask.getApiParams(this.gcm);
         task.execute(params);
     }
 }
