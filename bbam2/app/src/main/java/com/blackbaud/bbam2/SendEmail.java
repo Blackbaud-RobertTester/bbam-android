@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import auth.ValidatorUtil;
@@ -16,8 +17,12 @@ import notification.MessagesBackgroundTask;
 import rest.client.RestApiUtil;
 
 
-public class SendEmail extends Activity implements View.OnClickListener {
-
+public class SendEmail extends Activity implements View.OnClickListener
+{
+    EditText recipient;
+    EditText sender;
+    EditText subject;
+    EditText message;
     Button send;
     String gcm;
 
@@ -29,6 +34,11 @@ public class SendEmail extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
         this.gcm = GCMUtil.getGCM(intent);
         String email = intent.getStringExtra(MessageDetailActivity.EMAIL_RECIPIENT);
+
+        this.recipient = (EditText) findViewById(R.id.recipient);
+        this.sender = (EditText) findViewById(R.id.sender);
+        this.subject = (EditText) findViewById(R.id.subject);
+        this.message = (EditText) findViewById(R.id.message);
 
         this.send = (Button) findViewById(R.id.sendButton);
         this.send.setOnClickListener(this);
@@ -64,11 +74,35 @@ public class SendEmail extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v)
     {
-        //send email...
-        Toast.makeText(getApplicationContext(), "Email Sent", Toast.LENGTH_LONG).show();
+        if(ValidatorUtil.hasNoValue(this.recipient.getText().toString()))
+        {
+            getToastie("Invalid Recipient Email Address");
+        }
+        else if(ValidatorUtil.hasNoValue(this.sender.getText().toString()))
+        {
+            getToastie("Invalid Sender Email Address");
+        }
+        else if(ValidatorUtil.hasNoValue(this.subject.getText().toString()))
+        {
+            getToastie("Email Must Have a Subject");
+        }
+        else if(ValidatorUtil.hasNoValue(this.message.getText().toString()))
+        {
+            getToastie("Must Provide an Email Message");
+        }
+        else
+        {
+            //send email...
+            this.getToastie("Email Sent");
 
-        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
-        String[] apiEndpoint = RestApiUtil.getMessagesApiParamString(this.gcm);
-        task.execute(apiEndpoint);
+            AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
+            String[] apiEndpoint = RestApiUtil.getMessagesApiParamString(this.gcm);
+            task.execute(apiEndpoint);
+        }
+    }
+
+    private void getToastie(String messageToToast)
+    {
+        Toast.makeText(getApplicationContext(), messageToToast, Toast.LENGTH_SHORT).show();
     }
 }

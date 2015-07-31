@@ -21,4 +21,14 @@ public class ValidatorUtil
     {
         return ! hasValue(item);
     }
+
+    public boolean allHaveValue(String... items)
+    {
+        boolean allHaveValue = true;
+        for(String item : items)
+        {
+            allHaveValue &= hasValue(item);
+        }
+        return allHaveValue;
+    }
 }

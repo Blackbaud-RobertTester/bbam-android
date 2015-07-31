@@ -35,16 +35,4 @@
         android:text="Create Account"
         />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/activity_main_login_error"
-        android:id="@+id/error"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:textColor="#ff0000"
-        />
-
 </LinearLayout>
