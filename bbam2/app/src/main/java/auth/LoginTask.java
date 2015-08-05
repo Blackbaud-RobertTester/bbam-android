@@ -40,6 +40,12 @@ public class LoginTask extends AsyncTask<String, String, String>
         client.addParam(LOGIN_PW, password);
 
         String result = client.executePost();
+        if(result.contains("\""))
+        {
+            result = result.replaceFirst("\"", "");
+            int i = result.indexOf('"');
+            result = result.substring(0, i);
+        }
         this.gcm = result;
         return result;
     }

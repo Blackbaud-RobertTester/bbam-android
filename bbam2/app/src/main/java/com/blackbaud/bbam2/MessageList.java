@@ -2,6 +2,7 @@ package com.blackbaud.bbam2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import gcm.GCMUtil;
 import notification.MessagesBackgroundTask;
 import notification.NotificationAdapter;
 import notification.NotificationItem;
+import rest.client.RestApiUtil;
 
 
 public class MessageList extends Activity {
@@ -42,6 +44,7 @@ public class MessageList extends Activity {
         List<NotificationItem> notificationItems = getNotifications(intent);
 
         this.gcm = GCMUtil.getGCM(intent);
+        final String gcmDupe = this.gcm;
 
         this.list = (ListView) findViewById(R.id.notifList);
         final NotificationAdapter notificationAdapter = new NotificationAdapter(this, notificationItems);
@@ -54,6 +57,7 @@ public class MessageList extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotificationItem notificationItem = (NotificationItem) notificationAdapter.getItem(position);
                 Intent intent = new Intent(messageList, MessageDetailActivity.class);
+                GCMUtil.setGCM(intent, gcmDupe);
                 intent.putExtra(MessageList.NOTIFICATION_ITEM, notificationItem);
                 startActivity(intent);
             }
@@ -103,7 +107,7 @@ public class MessageList extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_notification_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_message_list, menu);
         return true;
     }
 
@@ -119,8 +123,18 @@ public class MessageList extends Activity {
             case R.id.action_add_login:
                 LinkerUtil.navToLinkAccount(this, this.gcm);
                 return true;
+            case R.id.action_reload:
+                reload();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void reload()
+    {
+        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
+        String[] apiEndpoint = RestApiUtil.getMessagesApiParamString(this.gcm);
+        task.execute(apiEndpoint);
     }
 }

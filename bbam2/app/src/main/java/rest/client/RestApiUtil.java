@@ -7,7 +7,7 @@ public class RestApiUtil
 {
     public static String[] getMessagesApiParamString(String gcmId)
     {
-        return new String[]{ "/messages/1" };
+        return new String[]{ "/messages/" + gcmId };
     }
 
     public static String getMessageApiCall(String[] params)
@@ -59,5 +59,47 @@ public class RestApiUtil
     public static String getLoginPassword(String[] params)
     {
         return params[2];
+    }
+
+    public static String[] getLinkAcctParams(String appLogin, String appPw, String gcm, String appId)
+    {
+        return new String[] { "/link", appLogin, appPw, gcm, appId };
+    }
+
+    public static String getLinkAcctEndpoint(String[] params)
+    {
+        return params[0];
+    }
+
+    public static String getLinkAcctAppLogin(String[] params)
+    {
+        return params[1];
+    }
+
+    public static String getLinkAcctAppPassword(String[] params)
+    {
+        return params[2];
+    }
+
+    public static String getLinkAcctGCM(String[] params)
+    {
+        return params[3];
+    }
+
+    public static String getLinkAcctAppId(String[] params)
+    {
+        String name = params[4];
+        if(name.equalsIgnoreCase("luminate online"))
+        {
+            return "1";
+        }
+        else if(name.equalsIgnoreCase("re nxt"))
+        {
+            return "2";
+        }
+        else
+        {
+            return "3";
+        }
     }
 }

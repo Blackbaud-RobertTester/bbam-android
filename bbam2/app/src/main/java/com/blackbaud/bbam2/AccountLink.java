@@ -1,16 +1,16 @@
 package com.blackbaud.bbam2;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import apps.LinkAppAcctTask;
 import gcm.GCMUtil;
-import notification.MessagesBackgroundTask;
 import rest.client.RestApiUtil;
 
 
@@ -18,6 +18,10 @@ public class AccountLink extends Activity implements View.OnClickListener
 {
     Button linkAccount;
     String gcm;
+
+    TextView appSelection;
+    EditText appLogin;
+    EditText appPw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,12 @@ public class AccountLink extends Activity implements View.OnClickListener
         this.linkAccount = (Button) findViewById(R.id.linkButton);
         this.gcm = GCMUtil.getGCM(getIntent());
 
-        TextView selectedApp = (TextView) findViewById(R.id.appSelector);
+        appSelection = (TextView) findViewById(R.id.appSelector);
         final String app = getIntent().getStringExtra(AppSelection.APP_SELECTION_ITEM);
-        selectedApp.setText(app);
+        appSelection.setText(app);
+
+        appLogin = (EditText) findViewById(R.id.appUser);
+        appPw = (EditText) findViewById(R.id.appPassword);
 
         linkAccount.setOnClickListener(this);
     }
@@ -58,9 +65,12 @@ public class AccountLink extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        //auth to service
-        AsyncTask task = new MessagesBackgroundTask(getApplicationContext(), this.gcm);
-        String[] params = RestApiUtil.getMessagesApiParamString(this.gcm);
+        String appId = appSelection.getText().toString();
+        String appUn = appLogin.getText().toString();
+        String appPass = appPw.getText().toString();
+
+        LinkAppAcctTask task = new LinkAppAcctTask(getApplicationContext());
+        String[] params = RestApiUtil.getLinkAcctParams(appUn, appPass, this.gcm, appId);
         task.execute(params);
     }
 }

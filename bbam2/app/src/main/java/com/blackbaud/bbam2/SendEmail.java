@@ -40,6 +40,8 @@ public class SendEmail extends Activity implements View.OnClickListener
         this.subject = (EditText) findViewById(R.id.subject);
         this.message = (EditText) findViewById(R.id.message);
 
+        this.recipient.setText(email);
+
         this.send = (Button) findViewById(R.id.sendButton);
         this.send.setOnClickListener(this);
     }
