@@ -41,6 +41,8 @@ public class MessageList extends Activity {
         setContentView(R.layout.activity_message_list);
 
         Intent intent = getIntent();
+        getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
+        getApplicationContext().sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
         List<NotificationItem> notificationItems = getNotifications(intent);
 
         this.gcm = GCMUtil.getGCM(intent);
